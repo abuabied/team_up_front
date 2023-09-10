@@ -1,4 +1,4 @@
-import { Search, SearchIconWrapper, StyledInputBase } from "./styles";
+import { Search, SearchIconWrapper, StyledInputBase } from "./styled";
 import SearchIcon from "@mui/icons-material/Search";
 
 export const SearchBar = () => {
@@ -8,7 +8,7 @@ export const SearchBar = () => {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        fullWidth="true"
+        fullWidth={true}
         placeholder="Search for Games, Users..."
         inputProps={{ "aria-label": "search" }}
       />

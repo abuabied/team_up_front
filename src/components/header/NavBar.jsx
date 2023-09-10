@@ -12,8 +12,7 @@ export const NavBar = () => {
   const windowSize = SetWindowSize();
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ background: "black" }}>
+      <AppBar sx={{ background: "black", position: "inherit" }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -32,6 +31,5 @@ export const NavBar = () => {
           {windowSize >= 900 ? <DesktopSideMenu /> : <MobileSideMenu />}
         </Toolbar>
       </AppBar>
-    </Box>
   );
 };
