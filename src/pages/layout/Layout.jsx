@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { FooterDiv, HeaderDiv, Page, PageContent } from "./styles";
+import { FooterDiv, HeaderDiv, Page, PageContent } from "./styled";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NavBar } from "../../components/header/NavBar";
@@ -15,9 +15,7 @@ export const Layout = () => {
         <Outlet />
       </PageContent>
 
-      <FooterDiv>
-
-      </FooterDiv>
+      <FooterDiv></FooterDiv>
       <ToastContainer position="bottom-right" autoClose={2000} />
     </Page>
   );
