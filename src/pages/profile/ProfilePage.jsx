@@ -1,19 +1,20 @@
-import { Typography } from "@mui/material";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { scrollToTop } from "../../helpers/setWindowSize";
 
 export const ProfilePage = () => {
-  const textStyle = {
-    fontSize: { xs: "20px", sm: "28px", md: "32px" },
-    fontWeight: "200",
-    lineHeight: { xs: "30px", sm: "40px", md: "50px" },
-    letterSpacing: "3px",
-    textAlign: "center",
-    padding: { xs: "1rem", sm: "4rem", md: "8rem" },
-    color: "white",
+  const navigate = useNavigate();
+  const goToSignIn = () => {
+    scrollToTop();
+    navigate("/profile/sign-in");
   };
+  let notSigned = true;
 
-  return (
-    <Typography component="div" sx={textStyle}>
-      <b>Under Maintainance!</b> Please be patient, Thank you.
-    </Typography>
-  );
+  useEffect(() => {
+    if (notSigned) {
+      goToSignIn();
+    }
+  });
+
+  return <h1>hi</h1>;
 };

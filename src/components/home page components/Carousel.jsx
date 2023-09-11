@@ -7,7 +7,7 @@ export const Carousel = () => {
         <div className="carousel-item active">
           <img
             className="d-block w-100"
-            src={require("../../assets/carosel_images/c1.jpg")}
+            src={require("../../assets/carosel images/c1.jpg")}
             alt="First slide"
           />
           <div
@@ -25,7 +25,7 @@ export const Carousel = () => {
         <div className="carousel-item">
           <img
             className="d-block w-100"
-            src={require("../../assets/carosel_images/c2.jpg")}
+            src={require("../../assets/carosel images/c2.jpg")}
             alt="Second slide"
           />
           <div
