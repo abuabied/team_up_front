@@ -3,7 +3,7 @@ import { CaptionText } from "./CaptionText";
 export const Carousel = () => {
   return (
     <div id="carousel" className="carousel slide" data-ride="carousel">
-      <div className="carousel-inner" style={{ maxHeight: "inherit" }}>
+      <div className="carousel-inner" style={{ maxHeight: "100vh" }}>
         <div className="carousel-item active">
           <img
             className="d-block w-100"
@@ -16,7 +16,9 @@ export const Carousel = () => {
           >
             <CaptionText
               caption_title={"Build"}
-              caption_text={"Add friends, Build your squads for games, sports..."}
+              caption_text={
+                "Add friends, Build your squads for games, sports..."
+              }
             />
           </div>
         </div>
