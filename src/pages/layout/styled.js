@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: hidden;
   height: 100vh;
     `;
 
@@ -26,4 +26,11 @@ export const PageContent = styled.div`
   }
 `;
 
-export const FooterDiv = styled.div``;
+export const FooterDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 1rem;
+  align-items: center;
+  gap: 1rem;
+`;

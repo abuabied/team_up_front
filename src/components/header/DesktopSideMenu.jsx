@@ -1,33 +1,30 @@
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import { MessagesWindow } from "./app_bar/messages/MessagesWindow";
+import { NotificationsWindow } from "./app_bar/notifications/NotificationsWindow";
+import { useNavigate } from "react-router-dom";
+import { scrollToTop } from "../../helpers/setWindowSize";
 
 export const DesktopSideMenu = () => {
+  const navigate = useNavigate();
+  const goToProfile = () => {
+    scrollToTop();
+    navigate("/profile");
+  };
   return (
     <Box sx={{ display: { xs: "none", md: "flex" } }}>
-      <IconButton size="large" aria-label="show new inbox" color="inherit">
-        <Badge badgeContent={1} color="error">
-          <MailIcon />
-        </Badge>
-      </IconButton>
-      <IconButton
-        size="large"
-        aria-label="show new notifications"
-        color="inherit"
-      >
-        <Badge badgeContent={0} color="error">
-          <NotificationsIcon />
-        </Badge>
-      </IconButton>
+      <MessagesWindow />
+
+      <NotificationsWindow />
+
       <IconButton
         size="large"
         edge="end"
         aria-label="account of current user"
         aria-haspopup="true"
         color="inherit"
+        onClick={goToProfile}
       >
         <AccountCircle />
       </IconButton>
