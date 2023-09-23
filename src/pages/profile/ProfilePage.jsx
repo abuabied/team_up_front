@@ -47,7 +47,8 @@ export const ProfilePage = () => {
     } else {
       setLogged(true);
     }
-  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const username = Signedin();
