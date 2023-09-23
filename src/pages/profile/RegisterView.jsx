@@ -15,13 +15,63 @@ import {
 import { scrollToTop } from "../../helpers/setWindowSize";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { validateRegisterData } from "../../helpers/resgisterFunctions";
+import { registerUser } from "../../services/apiServices";
+import { HttpStatusCode } from "axios";
+import { REGISTRATION_MESSAGES } from "../../consts/StringConsts";
 
 export const RegisterView = () => {
   const navigate = useNavigate();
-  const goToSignin = () => {
+  const goToLogin = () => {
     scrollToTop();
-    navigate("/profile/sign-in");
+    navigate("/profile/login");
   };
+  const goToHome = () => {
+    scrollToTop();
+    navigate("/");
+  };
+
+  const registerClick = async () => {
+    const fname = document.getElementById("fname");
+    const lname = document.getElementById("lname");
+    const uname = document.getElementById("uname");
+    const email = document.getElementById("email");
+    const pass = document.getElementById("pass1");
+    const pass2 = document.getElementById("pass2");
+    const pass2Val = pass2?.value ? pass2.value : "";
+    const registerData = {
+      firstName: fname?.value.trim() ? fname.value.trim() : "",
+      lastName: lname?.value.trim() ? lname.value.trim() : "",
+      username: uname?.value.trim() ? uname.value.trim() : "",
+      email: email?.value.trim() ? email.value.trim() : "",
+      password: pass?.value.trim() ? pass.value.trim() : "",
+    };
+
+    const isValid = validateRegisterData(registerData);
+    if (isValid?.length > 0) {
+      isValid.forEach((err) => {
+        toast.warning(err);
+      });
+    } else if (pass2Val !== registerData.password) {
+      toast.warning(
+        REGISTRATION_MESSAGES.INVALID_PASSWORD_PASSWORDS_DONT_MATCH
+      );
+    } else {
+      const res = await registerUser(registerData);
+      switch (res?.status) {
+        case HttpStatusCode.Created:
+          toast.success(REGISTRATION_MESSAGES.REGISTERED);
+          goToHome();
+          break;
+        case HttpStatusCode.Conflict:
+          toast.warning(REGISTRATION_MESSAGES.INVALID_USERNAME_ALREADY_EXIST);
+          break;
+        default:
+          toast.error(REGISTRATION_MESSAGES.ERROR_GENERAL);
+      }
+    }
+  };
+
   return (
     <div
       style={{
@@ -45,10 +95,10 @@ export const RegisterView = () => {
           }}
         >
           <InputLabel htmlFor="fname" sx={contentStyle}>
-            First name:
+            {"First name:"}
           </InputLabel>
           <DoubleEmptyLines />
-          <Input id="fname" placeholder="First" sx={{ color: "white" }} />
+          <Input id="fname" placeholder="-First-" sx={{ color: "white" }} />
         </FormControl>
         <DoubleEmptyLines />
 
@@ -58,10 +108,10 @@ export const RegisterView = () => {
           }}
         >
           <InputLabel htmlFor="lname" sx={contentStyle}>
-            Last name:
+            {"Last name:"}
           </InputLabel>
           <DoubleEmptyLines />
-          <Input id="lname" placeholder="Last" sx={{ color: "white" }} />
+          <Input id="lname" placeholder="-Last-" sx={{ color: "white" }} />
         </FormControl>
         <DoubleEmptyLines />
 
@@ -71,7 +121,7 @@ export const RegisterView = () => {
           }}
         >
           <InputLabel htmlFor="uname" sx={contentStyle}>
-            Username:
+            {"Username:"}
           </InputLabel>
           <DoubleEmptyLines />
           <Input id="uname" placeholder="Username" sx={{ color: "white" }} />
@@ -84,7 +134,7 @@ export const RegisterView = () => {
           }}
         >
           <InputLabel htmlFor="email" sx={contentStyle}>
-            Email:
+            {"Email: *Optional*"}
           </InputLabel>
           <DoubleEmptyLines />
           <Input id="email" placeholder="Email" sx={{ color: "white" }} />
@@ -129,12 +179,7 @@ export const RegisterView = () => {
         <Container
           sx={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
-          <StyledButton
-            onClick={() => {
-              toast.warning("Nothing happened!");
-            }}
-            buttonText={"register"}
-          />
+          <StyledButton onClick={registerClick} buttonText={"register"} />
         </Container>
         <DoubleEmptyLines />
         <Typography sx={contentStyle}>
@@ -144,12 +189,10 @@ export const RegisterView = () => {
           *Must provide at least Username Or Email.
         </Typography>
         <DoubleEmptyLines />
-        <Typography sx={titleStyle}>--- Back to SignIn ---</Typography>
-        <DoubleEmptyLines />
         <Container
           sx={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
-          <StyledButton onClick={goToSignin} buttonText={"Back"} />
+          <StyledButton onClick={goToLogin} buttonText={"Back"} />
         </Container>
       </Box>
     </div>

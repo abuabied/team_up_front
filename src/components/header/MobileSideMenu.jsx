@@ -64,7 +64,7 @@ export const MobileSideMenu = () => {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p style={{ margin: 0, alignSelf: "center" }}>Account</p>
       </MenuItem>
     </Menu>
   );

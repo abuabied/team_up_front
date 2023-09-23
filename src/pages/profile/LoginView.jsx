@@ -14,12 +14,55 @@ import {
 } from "../../components/helper components/EmptyLines";
 import { scrollToTop } from "../../helpers/setWindowSize";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { loginUser } from "../../services/apiServices";
+import { HttpStatusCode } from "axios";
+import { useState } from "react";
+import { LOGIN_MESSAGES } from "../../consts/StringConsts";
 
-export const SignInView = () => {
+export const LoginView = () => {
+  const [buttonMode, setButtonMode] = useState(true);
+
+  const checkEmptyInput = () => {
+    const uname = document.getElementById("uname");
+    const pass = document.getElementById("pass");
+    if (uname?.value === "" || pass?.value === "") setButtonMode(true);
+    else setButtonMode(false);
+  };
+
   const navigate = useNavigate();
   const goToRegister = () => {
     scrollToTop();
     navigate("/profile/register");
+  };
+  const goToHome = () => {
+    scrollToTop();
+    navigate("/");
+  };
+
+  const login = async () => {
+    const uname = document.getElementById("uname");
+    const pass = document.getElementById("pass");
+    const loginData = {
+      username: uname?.value.trim() ? uname.value.trim() : "",
+      password: pass?.value.trim() ? pass.value.trim() : "",
+    };
+
+    const res = await loginUser(loginData);
+    switch (res?.status) {
+      case HttpStatusCode.Ok:
+        toast.success(LOGIN_MESSAGES.LOGGED_IN);
+        goToHome();
+        break;
+      case HttpStatusCode.NotFound:
+        toast.warning(LOGIN_MESSAGES.INVALID_USERNAME_NOT_FOUND);
+        break;
+      case HttpStatusCode.Forbidden:
+        toast.warning(LOGIN_MESSAGES.INVALID_PASSWORD_INCORRECT);
+        break;
+      default:
+        toast.error(LOGIN_MESSAGES.ERROR_GENERAL);
+    }
   };
 
   return (
@@ -33,25 +76,26 @@ export const SignInView = () => {
       <Box
         sx={{
           backgroundColor: "#3f3839",
-          padding: { xs: "1rem", md: "3rem" },
+          padding: { xs: "2rem", md: "4rem" },
           paddingBottom: 0,
         }}
       >
-        <Typography sx={titleStyle}>sign in</Typography>
+        <Typography sx={titleStyle}>Login</Typography>
         <EmptyLine />
         <FormControl
           sx={{
             minWidth: { md: "30vw", lg: "20vw" },
           }}
         >
-          <InputLabel htmlFor="email" sx={contentStyle}>
+          <InputLabel htmlFor="uname" sx={contentStyle}>
             Username Or Email:
           </InputLabel>
           <DoubleEmptyLines />
           <Input
-            id="email"
+            id="uname"
             placeholder="User or Email..."
             sx={{ color: "white" }}
+            onChange={checkEmptyInput}
           />
         </FormControl>
         <DoubleEmptyLines />
@@ -69,6 +113,7 @@ export const SignInView = () => {
             placeholder="Password"
             type="password"
             sx={{ color: "white" }}
+            onChange={checkEmptyInput}
           />
         </FormControl>
         <DoubleEmptyLines />
@@ -76,10 +121,12 @@ export const SignInView = () => {
         <Container
           sx={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
-          <StyledButton onClick={() => {}} buttonText={"Login"} />
+          <StyledButton
+            onClick={login}
+            buttonText={"Login"}
+            disabled={buttonMode}
+          />
         </Container>
-        <DoubleEmptyLines />
-        <Typography sx={titleStyle}>--- Or Register ---</Typography>
         <DoubleEmptyLines />
         <Container
           sx={{ width: "100%", display: "flex", justifyContent: "center" }}

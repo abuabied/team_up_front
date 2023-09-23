@@ -1,6 +1,6 @@
 import ButtonBase from "@mui/material/ButtonBase";
 
-export const StyledButton = ({buttonText, onClick}) => {
+export const StyledButton = ({ buttonText, onClick, disabled }) => {
   const baseStyle = {
     border: "1px solid #000000",
     display: "flex",
@@ -16,17 +16,26 @@ export const StyledButton = ({buttonText, onClick}) => {
     textAlign: "center",
     letterSpacing: "2.7px",
     alignSelf: "center",
+    maxWidth: "100%",
   };
 
   const darkMode = {
     background: "#000000",
     color: "#FFFFFF",
-    cursor: "pointer"
+    cursor: "pointer",
   };
+
+  const disabledMode = {
+    background: "#979797",
+    color: "#000000",
+    cursor: "not-allowed",
+  };
+  const buttonStyle = disabled ? disabledMode : darkMode;
 
   return (
     <ButtonBase
-      sx={{ ...baseStyle, ...darkMode }}
+      disabled={disabled}
+      sx={{ ...baseStyle, ...buttonStyle }}
       onClick={onClick}
     >
       {buttonText}
