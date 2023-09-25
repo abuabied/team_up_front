@@ -6,7 +6,7 @@ import { Home } from "./pages/home/Home";
 import { HelpPage } from "./pages/help/Help";
 import { ProfilePage } from "./pages/profile/ProfilePage";
 import { ProfilePageOutlet } from "./pages/profile/ProfilePageOutlet";
-import { SignInView } from "./pages/profile/SignInView";
+import { LoginView } from "./pages/profile/LoginView";
 import { RegisterView } from "./pages/profile/RegisterView";
 
 
@@ -18,7 +18,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/profile" element={<ProfilePageOutlet />}>
             <Route index element={<ProfilePage />} />
-            <Route path="/profile/sign-in" element={<SignInView />} />
+            <Route path="/profile/login" element={<LoginView />} />
             <Route path="/profile/register" element={<RegisterView />} />
           </Route>
           <Route path="/help" element={<HelpPage />} />
