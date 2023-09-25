@@ -54,11 +54,8 @@ export const LoginView = () => {
         toast.success(LOGIN_MESSAGES.LOGGED_IN);
         goToHome();
         break;
-      case HttpStatusCode.NotFound:
-        toast.warning(LOGIN_MESSAGES.INVALID_USERNAME_NOT_FOUND);
-        break;
       case HttpStatusCode.Forbidden:
-        toast.warning(LOGIN_MESSAGES.INVALID_PASSWORD_INCORRECT);
+        toast.warning(LOGIN_MESSAGES.INVALID_CREDINTIALS);
         break;
       default:
         toast.error(LOGIN_MESSAGES.ERROR_GENERAL);

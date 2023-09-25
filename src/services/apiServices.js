@@ -26,7 +26,6 @@ export const loginUser = async (user) => {
     const response = await api.post(API_PATHS.GET_USER, user, {
       credentials: "include",
     });
-    console.log(response);
     return response;
   } catch (error) {
     return error.response;

@@ -16,15 +16,18 @@ import { HttpStatusCode } from "axios";
 
 export const ProfilePage = () => {
   const [user, setUser] = useState({});
-  const [logged, setLogged] = useState(false);
   const navigate = useNavigate();
   const goToLogin = () => {
     scrollToTop();
     navigate("/profile/login");
   };
-  const Signedin = () => {
+  const Signedin = async () => {
     const username = getCookie("username");
-    return username === null ? false : username;
+    if (username === undefined) {
+      goToLogin();
+    } else {
+      await getUserDetails(username);
+    }
   };
 
   const getUserDetails = async (username) => {
@@ -40,22 +43,8 @@ export const ProfilePage = () => {
   };
 
   useEffect(() => {
-    const username = Signedin();
-    if (username === null) {
-      setLogged(false);
-      goToLogin();
-    } else {
-      setLogged(true);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      Signedin();
   }, []);
-
-  useEffect(() => {
-    const username = Signedin();
-    if (logged) {
-      getUserDetails(username);
-    }
-  }, [logged]);
 
   const saveClick = async () => {
     const fname = document.getElementById("fname");
@@ -107,10 +96,12 @@ export const ProfilePage = () => {
   const [showEditButtons, setShowEditButtons] = useState(false);
 
   const editInfo = () => {
+    Signedin();
     setIsDisabled(false);
     setShowEditButtons(true);
   };
   const cancelEdit = () => {
+    Signedin();
     setIsDisabled(true);
     setShowEditButtons(false);
   };
@@ -125,7 +116,7 @@ export const ProfilePage = () => {
     >
       <h5>{"My Profile"}</h5>
       <h2 style={{ color: "white", margin: "1rem 0" }}>
-        Hello, {user.firstName}
+        Hello, {user?.firstName}
       </h2>
       <h5 style={{ margin: "1rem 0" }}>{"User info"}</h5>
       <Box>
