@@ -36,6 +36,7 @@ export const ProfilePage = () => {
     setUser(res?.data);
     switch (res?.status) {
       case HttpStatusCode.Ok:
+        console.log("create");
         setCookie("logged", username);
         break;
       default:
