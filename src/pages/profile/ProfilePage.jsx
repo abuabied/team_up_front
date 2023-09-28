@@ -9,7 +9,7 @@ import {
 } from "../../components/helper components/EmptyLines";
 import { toast } from "react-toastify";
 import { validateUpdatedData } from "../../helpers/resgisterFunctions";
-import { getCookie } from "../../helpers/helperFunctions";
+import { getCookie, setCookie } from "../../helpers/helperFunctions";
 import { getUser } from "../../services/apiServices";
 import { LOGIN_MESSAGES } from "../../consts/StringConsts";
 import { HttpStatusCode } from "axios";
@@ -22,7 +22,7 @@ export const ProfilePage = () => {
     navigate("/profile/login");
   };
   const Signedin = async () => {
-    const username = getCookie("username");
+    const username = getCookie("logged");
     if (username === undefined) {
       goToLogin();
     } else {
@@ -36,6 +36,7 @@ export const ProfilePage = () => {
     setUser(res?.data);
     switch (res?.status) {
       case HttpStatusCode.Ok:
+        setCookie("logged", username);
         break;
       default:
         toast.error(LOGIN_MESSAGES.ERROR_GENERAL);
