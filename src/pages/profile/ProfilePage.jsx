@@ -45,6 +45,7 @@ export const ProfilePage = () => {
   };
 
   useEffect(() => {
+    console.log("create");
       Signedin();
   }, []);
 
