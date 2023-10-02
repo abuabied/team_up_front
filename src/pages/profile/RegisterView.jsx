@@ -19,6 +19,7 @@ import { validateRegisterData } from "../../helpers/resgisterFunctions";
 import { registerUser } from "../../services/apiServices";
 import { HttpStatusCode } from "axios";
 import { REGISTRATION_MESSAGES } from "../../consts/StringConsts";
+import { setCookie } from "../../helpers/helperFunctions";
 
 export const RegisterView = () => {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ export const RegisterView = () => {
       switch (res?.status) {
         case HttpStatusCode.Created:
           toast.success(REGISTRATION_MESSAGES.REGISTERED);
+          setCookie("username", registerData.username);
           goToHome();
           break;
         case HttpStatusCode.Conflict:

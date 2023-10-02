@@ -31,3 +31,14 @@ export const loginUser = async (user) => {
     return error.response;
   }
 };
+
+  export const updateUser = async (user) => {
+    try {
+      const response = await api.post(API_PATHS.UPDATE_USER, user, {
+        credentials: "include",
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  };

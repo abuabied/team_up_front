@@ -1,10 +1,14 @@
 export const getCookie = (name) => {
-    function escape(s) { return s.replace(/([.*+?^$(){}|[\]/\\])/g, '\\$1'); }
-    var match = document.cookie.match(RegExp('(?:^|;\\s*)' + escape(name) + '=([^;]*)'));
-    return match ? match[1] : undefined;
-}
+  function escape(s) {
+    return s.replace(/([.*+?^$(){}|[\]/\\])/g, "\\$1");
+  }
+  var match = document.cookie.match(
+    RegExp("(?:^|;\\s*)" + escape(name) + "=([^;]*)")
+  );
+  return match ? match[1] : undefined;
+};
 
-export const setCookie = (name, value, hoursToExpire=4) => {
+export const setCookie = (name, value, hoursToExpire = 4) => {
   // Calculate the expiration date
   const date = new Date();
   date.setTime(date.getTime() + hoursToExpire * 60 * 60 * 1000);
@@ -17,9 +21,9 @@ export const setCookie = (name, value, hoursToExpire=4) => {
 
   // Set the cookie
   document.cookie = cookieString;
-}
+};
 
 export const deleteCookie = (name) => {
   // Set the cookie's expiration date to the past
   document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-}
+};

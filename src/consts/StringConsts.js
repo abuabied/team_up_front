@@ -1,6 +1,6 @@
 export const REGISTRATION_MESSAGES = {
   INVALID_PASSWORD_TOO_SHORT: "Password must be at least 6 charachters long!",
-  INVALID_NAME: "Make sure you entered a valid First & Last name!",
+  INVALID_NAME: "Make sure you entered a valid First & Last name! (no spaces or numbers)",
   INVALID_USERNAME_TOO_SHORT: "UserName must be at least 3 characters long!",
   INVALID_PASSWORD_NO_LETTER_OR_HAS_SPACE:
     "Password must has at least 1 letter and no spaces!",
@@ -20,8 +20,14 @@ export const LOGIN_MESSAGES = {
   ERROR_GENERAL: "Something happend!",
 };
 
+export const UPDATE_MESSAGES = {
+  UPDATED: "Information updated!",
+  ERROR_GENERAL: "Something happend!",
+};
+
 export const API_PATHS = {
   LOGIN: "/user/login",
   REGISTER: "/user/register",
   GET_USER: "/user/get-user",
+  UPDATE_USER: "/user/update",
 };
