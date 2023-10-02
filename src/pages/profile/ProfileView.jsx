@@ -9,41 +9,47 @@ import {
 } from "../../components/helper components/EmptyLines";
 import { toast } from "react-toastify";
 import { validateUpdatedData } from "../../helpers/resgisterFunctions";
-import { getCookie } from "../../helpers/helperFunctions";
+import {
+  deleteCookie,
+  getCookie,
+} from "../../helpers/helperFunctions";
 import { getUser } from "../../services/apiServices";
-import { LOGIN_MESSAGES } from "../../consts/StringConsts";
 import { HttpStatusCode } from "axios";
 
-export const ProfilePage = () => {
+export const ProfileView = () => {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   const goToLogin = () => {
     scrollToTop();
     navigate("/profile/login");
   };
-  const Signedin = async () => {
+  const signedIn = async () => {
+    const username = getCookie("username");
+    if (username === undefined) {
+      goToLogin();
+    }
+  };
+
+  const getUserDetails = async () => {
     const username = getCookie("username");
     if (username === undefined) {
       goToLogin();
     } else {
-      await getUserDetails(username);
-    }
-  };
-
-  const getUserDetails = async (username) => {
-    const user = { username: username };
-    const res = await getUser(user);
-    setUser(res?.data);
-    switch (res?.status) {
-      case HttpStatusCode.Ok:
-        break;
-      default:
-        toast.error(LOGIN_MESSAGES.ERROR_GENERAL);
+      const user = { username: username };
+      const res = await getUser(user);
+      switch (res?.status) {
+        case HttpStatusCode.Ok:
+          setUser(res?.data);
+          break;
+        default:
+          deleteCookie("username");
+          goToLogin();
+      }
     }
   };
 
   useEffect(() => {
-      Signedin();
+    getUserDetails();
   }, []);
 
   const saveClick = async () => {
@@ -96,12 +102,12 @@ export const ProfilePage = () => {
   const [showEditButtons, setShowEditButtons] = useState(false);
 
   const editInfo = () => {
-    Signedin();
+    signedIn();
     setIsDisabled(false);
     setShowEditButtons(true);
   };
   const cancelEdit = () => {
-    Signedin();
+    signedIn();
     setIsDisabled(true);
     setShowEditButtons(false);
   };

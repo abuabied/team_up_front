@@ -4,11 +4,10 @@ import { Layout } from "./pages/layout/Layout";
 import { NoPage } from "./pages/no_page/NoPage";
 import { Home } from "./pages/home/Home";
 import { HelpPage } from "./pages/help/Help";
-import { ProfilePage } from "./pages/profile/ProfilePage";
+import { ProfileView } from "./pages/profile/ProfileView";
 import { ProfilePageOutlet } from "./pages/profile/ProfilePageOutlet";
 import { LoginView } from "./pages/profile/LoginView";
 import { RegisterView } from "./pages/profile/RegisterView";
-
 
 function App() {
   return (
@@ -17,14 +16,14 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/profile" element={<ProfilePageOutlet />}>
-            <Route index element={<ProfilePage />} />
+            <Route index element={<ProfileView />} />
             <Route path="/profile/login" element={<LoginView />} />
             <Route path="/profile/register" element={<RegisterView />} />
-          </Route>
+          </Route>{" "}
           <Route path="/help" element={<HelpPage />} />
           <Route path="/*" element={<NoPage />} />
-        </Route>
-      </Routes>
+        </Route>{" "}
+      </Routes>{" "}
     </BrowserRouter>
   );
 }
