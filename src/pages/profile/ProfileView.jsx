@@ -12,9 +12,11 @@ import { validateUpdatedData } from "../../helpers/resgisterFunctions";
 import {
   deleteCookie,
   getCookie,
+  setCookie,
 } from "../../helpers/helperFunctions";
-import { getUser } from "../../services/apiServices";
+import { getUser, updateUser } from "../../services/apiServices";
 import { HttpStatusCode } from "axios";
+import { UPDATE_MESSAGES } from "../../consts/StringConsts";
 
 export const ProfileView = () => {
   const [user, setUser] = useState({});
@@ -23,6 +25,11 @@ export const ProfileView = () => {
     scrollToTop();
     navigate("/profile/login");
   };
+  const goToHome = () => {
+    scrollToTop();
+    navigate("/");
+  };
+
   const signedIn = async () => {
     const username = getCookie("username");
     if (username === undefined) {
@@ -40,6 +47,9 @@ export const ProfileView = () => {
       switch (res?.status) {
         case HttpStatusCode.Ok:
           setUser(res?.data);
+          document.getElementById("fname").value = res?.data?.firstName;
+          document.getElementById("lname").value = res?.data?.lastName;
+          document.getElementById("email").value = res?.data?.email;
           break;
         default:
           deleteCookie("username");
@@ -59,32 +69,34 @@ export const ProfileView = () => {
     const pass = document.getElementById("pass1");
     const pass2 = document.getElementById("pass2");
     const pass2Val = pass2?.value ? pass2.value : "";
-    const registerData = {
-      fname: fname?.value.trim() ? fname.value.trim() : "",
-      lname: lname?.value.trim() ? lname.value.trim() : "",
+    const updatedData = {
+      username: getCookie("username"),
+      firstName: fname?.value.trim() ? fname.value.trim() : "",
+      lastName: lname?.value.trim() ? lname.value.trim() : "",
       email: email?.value.trim() ? email.value.trim() : "",
       password: pass?.value.trim() ? pass.value.trim() : "",
     };
-
-    const isValid = validateUpdatedData(registerData);
+    const isValid = validateUpdatedData(updatedData);
     if (isValid?.length > 0) {
       isValid.forEach((err) => {
         toast.warning(err);
       });
     } else {
-      if (pass2Val !== registerData.password)
+      if (pass2Val !== updatedData.password)
         toast.warning("Passwords don't match!");
       else {
-        // const res: any = await userRegiter(registerData);
-        // if (res?.data?.status === "success") {
-        //   toast.success(res?.data?.msg);
-        //   createCookie("loggedIn", 'true', 1 / (24 * 60));
-        //   args.closeDialog();
-        // } else if (res?.data?.status === "failure")
-        //   toast.warning(res?.data?.msg);
-        // else toast.error(res?.data?.msg);
-        toast.success("Information updated!");
-        cancelEdit();
+        const res = await updateUser(updatedData);
+        switch (res?.status) {
+          case HttpStatusCode.Ok:
+            toast.success(UPDATE_MESSAGES.UPDATED);
+            setCookie("username", getCookie("username"));
+            updatedData.password = "";
+            setUser(updatedData);
+            cancelEdit(false);
+            break;
+          default:
+            toast.error(UPDATE_MESSAGES.ERROR_GENERAL);
+        }
       }
     }
   };
@@ -106,10 +118,19 @@ export const ProfileView = () => {
     setIsDisabled(false);
     setShowEditButtons(true);
   };
-  const cancelEdit = () => {
+  const cancelEdit = (reset = true) => {
     signedIn();
     setIsDisabled(true);
     setShowEditButtons(false);
+    if (reset) {
+      document.getElementById("fname").value = user?.firstName;
+      document.getElementById("lname").value = user?.lastName;
+      document.getElementById("email").value = user?.email;
+    }
+  };
+  const logout = () => {
+    deleteCookie("username");
+    goToHome();
   };
 
   return (
@@ -127,31 +148,13 @@ export const ProfileView = () => {
       <h5 style={{ margin: "1rem 0" }}>{"User info"}</h5>
       <Box>
         <h5 style={{ color: "#d3fbc6" }}>{"First name:"}</h5>
-        <Input
-          id="fname"
-          disabled={isDisabled}
-          defaultValue={"First"}
-          sx={inputStyle}
-          value={user?.firstName}
-        />
+        <Input id="fname" disabled={isDisabled} sx={inputStyle} />
 
         <h5 style={{ color: "#d3fbc6" }}>{"Last name:"}</h5>
-        <Input
-          id="lname"
-          disabled={isDisabled}
-          defaultValue={"Last"}
-          sx={inputStyle}
-          value={user?.lastName}
-        />
+        <Input id="lname" disabled={isDisabled} sx={inputStyle} />
 
         <h5 style={{ color: "#d3fbc6" }}>{"Email: *Optional"}</h5>
-        <Input
-          id="email"
-          disabled={isDisabled}
-          defaultValue={"Email@domain.com"}
-          sx={inputStyle}
-          value={user?.email === null ? "No email!" : user?.email}
-        />
+        <Input id="email" disabled={isDisabled} sx={inputStyle} />
 
         {showEditButtons ? (
           <Box>
@@ -184,9 +187,17 @@ export const ProfileView = () => {
             </Box>
           </Box>
         ) : (
-          <Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              flexWrap: "wrap",
+              gap: "2rem",
+            }}
+          >
             <EmptyLine />
             <StyledButton onClick={editInfo} buttonText={"Edit info"} />
+            <StyledButton onClick={logout} buttonText={"Logout"} />
           </Box>
         )}
         <EmptyLine />
