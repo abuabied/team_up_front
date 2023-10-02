@@ -18,3 +18,8 @@ export const setCookie = (name, value, hoursToExpire=4) => {
   // Set the cookie
   document.cookie = cookieString;
 }
+
+export const deleteCookie = (name) => {
+  // Set the cookie's expiration date to the past
+  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}

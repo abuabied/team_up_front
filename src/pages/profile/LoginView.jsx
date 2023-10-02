@@ -19,6 +19,7 @@ import { loginUser } from "../../services/apiServices";
 import { HttpStatusCode } from "axios";
 import { useState } from "react";
 import { LOGIN_MESSAGES } from "../../consts/StringConsts";
+import { setCookie } from "../../helpers/helperFunctions";
 
 export const LoginView = () => {
   const [buttonMode, setButtonMode] = useState(true);
@@ -52,6 +53,7 @@ export const LoginView = () => {
     switch (res?.status) {
       case HttpStatusCode.Ok:
         toast.success(LOGIN_MESSAGES.LOGGED_IN);
+        setCookie("username", loginData.username);
         goToHome();
         break;
       case HttpStatusCode.Forbidden:

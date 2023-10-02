@@ -6,6 +6,7 @@ import { DesktopSideMenu } from "./DesktopSideMenu";
 import { MobileSideMenu } from "./MobileSideMenu";
 import SetWindowSize from "../../helpers/setWindowSize";
 import { MenuBar } from "./app_bar/MenuBar";
+import { Logo } from "../footer/Logo";
 
 export const NavBar = () => {
   const windowSize = SetWindowSize();
@@ -16,7 +17,6 @@ export const NavBar = () => {
           <MenuBar />
 
           <SearchBar />
-
           <Box sx={{ flexGrow: 1 }} />
 
           {windowSize >= 900 ? <DesktopSideMenu /> : <MobileSideMenu />}
