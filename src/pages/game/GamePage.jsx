@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getGameById, getGameImage } from "../../services/apiServices";
-import { Box, Card, CardMedia, Typography } from "@mui/material";
+import { getGameById } from "../../services/apiServices";
+import { Box, Card, Typography } from "@mui/material";
 import { EmptyLine } from "../../components/helper components/EmptyLines";
 import YouTube from "react-youtube";
 import { scrollToTop } from "../../helpers/setWindowSize";

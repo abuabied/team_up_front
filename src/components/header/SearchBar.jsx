@@ -1,4 +1,3 @@
-import { Box, List, ListItem, ListItemButton } from "@mui/material";
 import { Search, SearchIconWrapper, StyledInputBase } from "./styled";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
