@@ -37,7 +37,7 @@ export const MessagesWindow = ({ withText }) => {
     <Box>
       <Box sx={{ display: "flex" }} onClick={toggleDrawer(true)}>
         <IconButton size="large" aria-label="show new inbox" color="inherit">
-          <Badge badgeContent={1} color="error">
+          <Badge badgeContent={0} color="error">
             <MailIcon />
           </Badge>
         </IconButton>
@@ -79,21 +79,9 @@ export const MessagesWindow = ({ withText }) => {
               <ListItemText primary="Close window" />
             </ListItemButton>
           </ListItem>
-          <ListItem sx={{ backgroundColor: "#363535", margin: "10px 0" }}>
+          {/* <ListItem sx={{ backgroundColor: "#363535", margin: "10px 0" }}>
             <MessagesWindowItem msg={messages.msg1} />
-          </ListItem>
-          <ListItem sx={{ backgroundColor: "#363535", margin: "10px 0" }}>
-            <MessagesWindowItem msg={messages.msg1} />
-          </ListItem>
-          <ListItem sx={{ backgroundColor: "#363535", margin: "10px 0" }}>
-            <MessagesWindowItem msg={messages.msg1} />
-          </ListItem>
-          <ListItem sx={{ backgroundColor: "#363535", margin: "10px 0" }}>
-            <MessagesWindowItem msg={messages.msg1} />
-          </ListItem>
-          <ListItem sx={{ backgroundColor: "#363535", margin: "10px 0" }}>
-            <MessagesWindowItem msg={messages.msg1} />
-          </ListItem>
+          </ListItem> */}
         </List>
         <ListItem
           disablePadding
