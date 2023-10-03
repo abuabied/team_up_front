@@ -6,21 +6,20 @@ import { DesktopSideMenu } from "./DesktopSideMenu";
 import { MobileSideMenu } from "./MobileSideMenu";
 import SetWindowSize from "../../helpers/setWindowSize";
 import { MenuBar } from "./app_bar/MenuBar";
-import { Logo } from "../footer/Logo";
 
 export const NavBar = () => {
   const windowSize = SetWindowSize();
 
   return (
-      <AppBar sx={{ background: "black", position: "inherit" }}>
-        <Toolbar>
-          <MenuBar />
+    <AppBar sx={{ background: "black", position: "inherit" }}>
+      <Toolbar>
+        <MenuBar />
 
-          <SearchBar />
-          <Box sx={{ flexGrow: 1 }} />
+        <SearchBar />
+        <Box sx={{ flexGrow: 1 }} />
 
-          {windowSize >= 900 ? <DesktopSideMenu /> : <MobileSideMenu />}
-        </Toolbar>
-      </AppBar>
+        {windowSize >= 900 ? <DesktopSideMenu /> : <MobileSideMenu />}
+      </Toolbar>
+    </AppBar>
   );
 };
