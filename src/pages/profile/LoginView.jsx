@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 import { loginUser } from "../../services/apiServices";
 import { HttpStatusCode } from "axios";
 import { useState } from "react";
-import { LOGIN_MESSAGES } from "../../consts/StringConsts";
+import { COOKIES_IDS, LOGIN_MESSAGES } from "../../consts/StringConsts";
 import { setCookie } from "../../helpers/helperFunctions";
 
 export const LoginView = () => {
@@ -53,7 +53,8 @@ export const LoginView = () => {
     switch (res?.status) {
       case HttpStatusCode.Ok:
         toast.success(LOGIN_MESSAGES.LOGGED_IN);
-        setCookie("username", loginData.username);
+        setCookie(COOKIES_IDS.USERNAME, loginData.username);
+        setCookie(COOKIES_IDS.GAME_COLLECTION, res?.data);
         goToHome();
         break;
       case HttpStatusCode.Forbidden:
@@ -87,12 +88,12 @@ export const LoginView = () => {
           }}
         >
           <InputLabel htmlFor="uname" sx={contentStyle}>
-            Username Or Email:
+            Username:
           </InputLabel>
           <DoubleEmptyLines />
           <Input
             id="uname"
-            placeholder="User or Email..."
+            placeholder="Username"
             sx={{ color: "white" }}
             onChange={checkEmptyInput}
           />

@@ -18,14 +18,14 @@ import { toast } from "react-toastify";
 import { validateRegisterData } from "../../helpers/resgisterFunctions";
 import { registerUser } from "../../services/apiServices";
 import { HttpStatusCode } from "axios";
-import { REGISTRATION_MESSAGES } from "../../consts/StringConsts";
+import { COOKIES_IDS, REGISTRATION_MESSAGES } from "../../consts/StringConsts";
 import { setCookie } from "../../helpers/helperFunctions";
 
 export const RegisterView = () => {
   const navigate = useNavigate();
   const goToLogin = () => {
     scrollToTop();
-    navigate("/profile/login");
+    navigate("/profile");
   };
   const goToHome = () => {
     scrollToTop();
@@ -62,7 +62,8 @@ export const RegisterView = () => {
       switch (res?.status) {
         case HttpStatusCode.Created:
           toast.success(REGISTRATION_MESSAGES.REGISTERED);
-          setCookie("username", registerData.username);
+          setCookie(COOKIES_IDS.USERNAME, registerData.username);
+          setCookie(COOKIES_IDS.GAME_COLLECTION,"");
           goToHome();
           break;
         case HttpStatusCode.Conflict:
