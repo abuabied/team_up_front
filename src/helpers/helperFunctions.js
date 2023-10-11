@@ -1,3 +1,5 @@
+import { COOKIES_IDS } from "../consts/StringConsts";
+
 export const getCookie = (name) => {
   function escape(s) {
     return s.replace(/([.*+?^$(){}|[\]/\\])/g, "\\$1");
@@ -26,4 +28,27 @@ export const setCookie = (name, value, hoursToExpire = 4) => {
 export const deleteCookie = (name) => {
   // Set the cookie's expiration date to the past
   document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};
+
+export const isLogged = () => {
+  const username = getCookie(COOKIES_IDS.USERNAME);
+  if (username === undefined) {
+    return false;
+  }
+  return true;
+};
+
+export const isGameInCollection = (gameID) => {
+  let containsExactSubstring = false;
+  const gamesInCollection = getCookie(COOKIES_IDS.GAME_COLLECTION);
+  if(gamesInCollection === undefined){
+    return containsExactSubstring; 
+  }
+  const parts = gamesInCollection.split(",");
+  parts.forEach((part) => {
+    if (part.trim() === gameID) {
+      containsExactSubstring = true;
+    }
+  });
+  return containsExactSubstring;
 };

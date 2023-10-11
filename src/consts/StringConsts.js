@@ -28,6 +28,26 @@ export const UPDATE_MESSAGES = {
 export const API_PATHS = {
   LOGIN: "/user/login",
   REGISTER: "/user/register",
-  GET_USER: "/user/get-user",
+  GET_USER: "/user/getUser",
   UPDATE_USER: "/user/update",
+  ADD_GAME: "/user/addGame",
+  REMOVE_GAME: "/user/removeGame",
+  GET_GAMES_COLLECTION: "/user/getGamesCollection",
+};
+
+export const COOKIES_IDS = {
+  USERNAME: "username",
+  GAME_COLLECTION: "gameCollection"
+};
+
+export const GENERAL_MESSAGES = {
+  REFRESH: "Something went wrong! Please refresh the page.",
+  LOGIN_BEFORE_ACTION: "Login first!",
+}
+
+export const GAME_COLLECTION_ACTIONS = {
+  LOGIN_BEFORE_ACTION: "Login first!",
+  GAME_ADDED_TO_COLLECTION: "Game added to collection!",
+  GAME_REMOVED_FROM_COLLECTION: "Game removed from collection!",
+  ERROR_GENERAL: "Something happend!",
 };

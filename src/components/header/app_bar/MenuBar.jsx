@@ -17,6 +17,9 @@ import HomeIcon from "@mui/icons-material/Home";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { scrollToTop } from "../../../helpers/setWindowSize";
+import { toast } from "react-toastify";
+import { GAME_COLLECTION_ACTIONS } from "../../../consts/StringConsts";
+import { isLogged } from "../../../helpers/helperFunctions";
 
 export const MenuBar = () => {
   const navigate = useNavigate();
@@ -29,6 +32,15 @@ export const MenuBar = () => {
     setdrawerState(false);
     scrollToTop();
     navigate("/help");
+  };
+  const goToGamesCollection = () => {
+    setdrawerState(false);
+    if (isLogged()) {
+      scrollToTop();
+      navigate("/profile/gamesCollection");
+    } else {
+      toast.warning(GAME_COLLECTION_ACTIONS.LOGIN_BEFORE_ACTION);
+    }
   };
 
   const [drawerState, setdrawerState] = useState(false);
@@ -85,11 +97,11 @@ export const MenuBar = () => {
           </ListItem>
 
           <ListItem>
-            <ListItemButton>
+            <ListItemButton onClick={goToGamesCollection}>
               <ListItemIcon>
                 <LibraryBooksIcon sx={{ color: "white" }} />
               </ListItemIcon>
-              <ListItemText primary="My Collection" />
+              <ListItemText primary="Collection" />
             </ListItemButton>
           </ListItem>
 
@@ -98,7 +110,7 @@ export const MenuBar = () => {
               <ListItemIcon>
                 <GroupsIcon sx={{ color: "white" }} />
               </ListItemIcon>
-              <ListItemText primary="Meetings" />
+              <ListItemText primary="Sessions" />
             </ListItemButton>
           </ListItem>
 

@@ -1,21 +1,23 @@
 import ButtonBase from "@mui/material/ButtonBase";
 
-export const StyledButton = ({ buttonText, onClick, disabled }) => {
+export const StyledButton = ({
+  buttonText,
+  onClick,
+  disabled,
+  textTransform = "uppercase",
+}) => {
   const baseStyle = {
     border: "1px solid #000000",
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     gap: "10px",
     width: "206px",
     height: "48px",
-    textTransform: "uppercase",
+    textTransform: textTransform,
     fontWeight: 400,
     fontSize: "18px",
     lineHeight: "20px",
     textAlign: "center",
     letterSpacing: "2.7px",
-    alignSelf: "center",
     maxWidth: "100%",
   };
 

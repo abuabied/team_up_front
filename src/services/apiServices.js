@@ -82,3 +82,36 @@ export const getGameById = async (id) => {
     return null;
   }
 };
+
+export const addGameToCollection = async (userGame) => {
+  try {
+    const response = await api.post(API_PATHS.ADD_GAME, userGame, {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const removeGameFromCollection = async (userGame) => {
+  try {
+    const response = await api.post(API_PATHS.REMOVE_GAME, userGame, {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const getUserGamesCollection = async (user) => {
+  try {
+    const response = await api.post(API_PATHS.GET_GAMES_COLLECTION, user, {
+      credentials: "include",
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
